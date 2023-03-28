@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("disconnect", function() {
-        console.log("usuari desconectat" + socket.data.nickname)
+        console.log("usuari desconectat: " + socket.data.nickname)
 
     })
 
