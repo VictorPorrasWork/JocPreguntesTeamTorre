@@ -41,6 +41,20 @@ io.on("connection", (socket) => {
             //  https://socket.io/docs/v4/emit-cheatsheet/
     })
 
+    socket.on("get users", function(data) {
+        const users = [];
+      
+        for (let [id, socket] of io.of("/").sockets) {
+          users.push({
+            userID: id,
+            username: socket.data.nickname,
+          });
+        }
+      
+        socket.emit("users", users);
+        // ...
+      });
+
     socket.on("disconnect", function() {
         console.log("usuari desconectat: " + socket.data.nickname)
 
