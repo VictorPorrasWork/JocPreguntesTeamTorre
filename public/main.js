@@ -7,6 +7,8 @@ sendButton.addEventListener("click", send)
 
 function send() {
     socket.emit("nickname", {nickname: nicknameInput.value} )
+    // redirigir a la vista quiz.html
+    window.location.href = "quiz.html";
 }
 
 socket.on('nickname rebut', function(data) {
