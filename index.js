@@ -15,7 +15,7 @@ var idInterval= setInterval(enviar,5000);
 
 function enviar(){
     console.log("enviant missatge");
-    io.emit("time",{message:"hola coca-cola"});
+    io.emit("time",{message:"among us"});
 }
 
 //variables compartides per tots els usuaris
@@ -40,6 +40,20 @@ io.on("connection", (socket) => {
             // Totes les funcions disponibles les tenim a
             //  https://socket.io/docs/v4/emit-cheatsheet/
     })
+
+    socket.on("get users", function(data) {
+        const users = [];
+      
+        for (let [id, socket] of io.of("/").sockets) {
+          users.push({
+            userID: id,
+            username: socket.data.nickname,
+          });
+        }
+      
+        socket.emit("users", users);
+        // ...
+      });
 
     socket.on("disconnect", function() {
         console.log("usuari desconectat: " + socket.data.nickname)

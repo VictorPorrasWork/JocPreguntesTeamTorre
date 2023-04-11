@@ -13,10 +13,17 @@ socket.on('nickname rebut', function(data) {
 
     console.log(data)
 
+    socket.emit("get users", {})
+
 })
 
 socket.on('time', function(data) {
 
     console.log(data)
 
+})
+
+socket.on('users', function(data) {
+
+    console.log(data)
 })
