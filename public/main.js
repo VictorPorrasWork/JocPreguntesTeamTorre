@@ -26,4 +26,5 @@ socket.on('time', function(data) {
 socket.on('users', function(data) {
 
     console.log(data)
+    
 })
