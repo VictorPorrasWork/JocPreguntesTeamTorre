@@ -1,5 +1,8 @@
 const socket = io();
 
+// Definir variable para guardar las respuestas
+let respuestas = {};
+
 // Obtenemos las preguntas del archivo preguntas.json
 fetch('/preguntas.json')
   .then(response => response.json())
@@ -12,6 +15,7 @@ fetch('/preguntas.json')
     const preguntasCategoria = preguntas[categoria];
     const pregunta = preguntasCategoria[Math.floor(Math.random() * preguntasCategoria.length)];
 
+    
     // Mostramos la pregunta
     const preguntaEl = document.getElementById('pregunta');
     preguntaEl.textContent = pregunta.pregunta;
@@ -43,7 +47,7 @@ fetch('/preguntas.json')
       if (respuesta) {
         socket.emit('respuesta', respuesta.value);
         enviarBtn.disabled = true;
-        console.log('enviar')
+        console.log('enviado')
       } else {
         alert('Por favor selecciona una respuesta.');
       }
@@ -54,6 +58,29 @@ fetch('/preguntas.json')
     alert('Error al obtener las preguntas.');
   });
 
-socket.on('resultado', resultado => {
-  alert(`Tu respuesta es ${resultado.correcta ? 'correcta' : 'incorrecta'}.`);
-});
+
+
+
+// Escuchar el evento de conexión del socket
+socket.on('connect', () => {
+    console.log("funciona?")
+    console.log('Conectado al servidor');
+  });
+  
+  // Escuchar el evento de desconexión del socket
+  socket.on('disconnect', () => {
+    console.log('Desconectado del servidor');
+  });
+  
+  // Escuchar el evento de respuesta del usuario
+  socket.on('respuesta', (data) => {
+    respuestas[socket.id] = data;
+    console.log(`Respuestas del usuario: ${JSON.stringify(respuestas)}`);
+  });
+
+  // Función para enviar las respuestas del usuario al servidor
+  function enviarRespuestas(respuestas) {
+    socket.emit('respuesta', respuestas);
+  }
+  
+  

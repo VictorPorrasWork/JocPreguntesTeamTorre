@@ -60,6 +60,11 @@ io.on("connection", (socket) => {
 
     })
 
+    socket.on("respuesta", (data) => {
+      console.log("Respuesta recibida del cliente: ", data);
+      const respuestas = data;
+    });
+
 });
 
 httpServer.listen(3000, ()=>
