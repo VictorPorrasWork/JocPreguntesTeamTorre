@@ -84,6 +84,10 @@ socket.on('respuesta', (data) => {
       respuestasEl.appendChild(labelEl);
       respuestasEl.appendChild(document.createElement('br'));
     }
+    
+    // Habilitamos el botón de enviar para la siguiente pregunta
+    enviarBtn.disabled = false;
+
   } else {
     // Si ya no hay más preguntas, emitir los resultados al cliente
     socket.emit('resultados', respuestas);
