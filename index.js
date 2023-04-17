@@ -62,6 +62,8 @@ io.on("connection", (socket) => {
 
     })
 */
+
+    const preguntas = require('./public/preguntas.json')
     socket.on("respuesta", (data) => {
       console.log("Respuesta recibida del cliente: ", data);
       const respuestas = data;
