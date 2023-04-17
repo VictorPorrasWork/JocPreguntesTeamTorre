@@ -13,6 +13,9 @@ const io = new Server(httpServer, {});
 
 var idInterval= setInterval(enviar,5000);
 
+const preguntas = require('./preguntas.json');
+
+
 function enviar(){
     console.log("enviant missatge");
     io.emit("time",{message:"among us"});
