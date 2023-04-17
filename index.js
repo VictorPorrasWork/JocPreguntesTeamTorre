@@ -11,6 +11,7 @@ app.use(express.static("public"));
 
 const io = new Server(httpServer, {});
 
+/*
 var idInterval= setInterval(enviar,5000);
 
 const preguntas = require('./preguntas.json');
@@ -20,6 +21,7 @@ function enviar(){
     console.log("enviant missatge");
     io.emit("time",{message:"among us"});
 }
+*/
 
 //variables compartides per tots els usuaris
 var usuaris = [];
@@ -57,11 +59,16 @@ io.on("connection", (socket) => {
         socket.emit("users", users);
         // ...
       });
-
+/*
     socket.on("disconnect", function() {
         console.log("usuari desconectat: " + socket.data.nickname)
 
     })
+*/
+    socket.on("respuesta", (data) => {
+      console.log("Respuesta recibida del cliente: ", data);
+      const respuestas = data;
+    });
 
 });
 
