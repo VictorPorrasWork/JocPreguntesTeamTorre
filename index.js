@@ -21,7 +21,8 @@ function enviar(){
 */
 
 //variables compartides per tots els usuaris
-var usuaris = [];
+var users = [];
+var empiezaPartida = false;
 
 io.on("connection", (socket) => {
   
@@ -62,6 +63,14 @@ io.on("connection", (socket) => {
 
     })
 */
+  // Incrementar el contador de usuarios conectados cuando se conecta un nuevo usuario
+  users.push(socket.id);
+
+  // Si hay 5 usuarios conectados, establecer la variable "empiezaPartida" en true
+  if (users.length === 5) {
+    empiezaPartida = true;
+    console.log("Ha començat la partida "+ empiezaPartida);
+  }
 
     const preguntas = require('./public/preguntas.json')
     socket.on("respuesta", (data) => {
