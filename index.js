@@ -11,17 +11,15 @@ app.use(express.static("public"));
 
 const io = new Server(httpServer, {});
 
-/*
-var idInterval= setInterval(enviar,5000);
+// var idInterval= setInterval(enviar,5000);
 
-const preguntas = require('./preguntas.json');
+const preguntas = require('./public/preguntas.json');
 
 
-function enviar(){
-    console.log("enviant missatge");
-    io.emit("time",{message:"among us"});
-}
-*/
+// function enviar(){
+//     console.log("enviant missatge");
+//     io.emit("time",{message:"among us"});
+// }
 
 //variables compartides per tots els usuaris
 var usuaris = [];
@@ -59,18 +57,24 @@ io.on("connection", (socket) => {
         socket.emit("users", users);
         // ...
       });
-/*
+
     socket.on("disconnect", function() {
         console.log("usuari desconectat: " + socket.data.nickname)
 
     })
-*/
-    socket.on("respuesta", (data) => {
-      console.log("Respuesta recibida del cliente: ", data);
-      const respuestas = data;
-    });
+
+    socket.join('preguntas');
+
+  // Enviar una pregunta aleatoria a los usuarios en la sala "preguntas"
+  const pregunta = preguntas[Math.floor(Math.random() * preguntas.length)];
+  io.to('preguntas').emit('nueva-pregunta', pregunta);
 
 });
+
+  //  socket.on("respuesta", (data) => {
+  //     console.log("Respuesta recibida del cliente: ", data);
+  //     const respuestas = data;
+  //   });
 
 httpServer.listen(3000, ()=>
     console.log(`Server listening at http://localhost:3000`)
