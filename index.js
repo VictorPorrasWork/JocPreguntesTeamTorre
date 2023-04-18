@@ -20,7 +20,8 @@ const io = new Server(httpServer, {});
 // }
 
 //variables compartides per tots els usuaris
-var usuaris = [];
+var users = [];
+var empiezaPartida = false;
 
 io.on("connection", (socket) => {
   
@@ -56,18 +57,38 @@ io.on("connection", (socket) => {
         // ...
       });
 
-    socket.on("disconnect", function() {
-        console.log("usuari desconectat: " + socket.data.nickname)
+      socket.on('join', ({ room }) => {
+        socket.join(room);
+        console.log(`El usuario con ID ${socket.id} se ha unido a la sala ${room}`);
+      });
 
-    })
+    // socket.on("disconnect", function() {
+    //     console.log("usuari desconectat: " + socket.data.nickname)
 
-    const preguntas = require('./public/preguntas.json')
-    socket.on("respuesta", (data) => {
-      console.log("Respuesta recibida del cliente: ", data);
-      const respuestas = data;
-    });
+    // })
 
+  // Incrementar el contador de usuarios conectados cuando se conecta un nuevo usuario
+  users.push(socket.id);
+
+  // Si hay 5 usuarios conectados, establecer la variable "empiezaPartida" en true
+  // Comprobar si hay al menos dos usuarios con nombres ingresados
+  const sockets = Object.values(io.sockets.sockets).filter(s => s.data.nickname !== data.nickname);
+  const usersWithNames = [];
+  if (usersWithNames.length >= 2 && !empiezaPartida) {
+    empiezaPartida = true;
+    console.log("Ha començat la partida " + empiezaPartida);
+    io.emit('partidaComenzada', { url: '/partida' });
+  }
 });
+  
+
+    // const preguntas = require('./public/preguntas.json')
+    // socket.on("respuesta", (data) => {
+    //   console.log("Respuesta recibida del cliente: ", data);
+    //   const respuestas = data;
+    // });
+
+//});
 
   //  socket.on("respuesta", (data) => {
   //     console.log("Respuesta recibida del cliente: ", data);
