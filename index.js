@@ -1,8 +1,10 @@
 //Servidor
-
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const preguntas = require('./preguntas.json');
+
+//console.log(preguntas);
 
 const app = express();
 const httpServer = createServer(app);
@@ -11,74 +13,48 @@ app.use(express.static("public"));
 
 const io = new Server(httpServer, {});
 
-/*
-var idInterval= setInterval(enviar,5000);
+const http = require('http');
+const socketIO = require('socket.io');
 
-function enviar(){
-    console.log("enviant missatge");
-    io.emit("time",{message:"hola coca-cola"});
-}
-*/
 
-//variables compartides per tots els usuaris
-var users = [];
-var empiezaPartida = false;
+const server = http.createServer(app);
 
-io.on("connection", (socket) => {
-  
-    console.log('Connectat un client...')
 
-    socket.on("nickname", function(data) {
-            console.log(data.nickname)
+app.use(express.static(__dirname + '/public'));
 
-            socket.data.nickname = data.nickname;
-
-            
-            // respondre al que ha enviat, respon el servidor al client
-            socket.emit("nickname rebut",{"response":"ok"})
-
-            // respondre a la resta de clients menys el que ha enviat
-            socket.broadcast.emit("nickname rebut",{"response": data.nickname});
-
-            // Totes les funcions disponibles les tenim a
-            //  https://socket.io/docs/v4/emit-cheatsheet/
-    })
-
-    socket.on("get users", function(data) {
-        const users = [];
-      
-        for (let [id, socket] of io.of("/").sockets) {
-          users.push({
-            userID: id,
-            username: socket.data.nickname,
-          });
-        }
-      
-        socket.emit("users", users);
-        // ...
-      });
-/*
-    socket.on("disconnect", function() {
-        console.log("usuari desconectat: " + socket.data.nickname)
-
-    })
-*/
-  // Incrementar el contador de usuarios conectados cuando se conecta un nuevo usuario
-  users.push(socket.id);
-
-  // Si hay 5 usuarios conectados, establecer la variable "empiezaPartida" en true
-  if (users.length === 5) {
-    empiezaPartida = true;
-    console.log("Ha començat la partida "+ empiezaPartida);
-  }
-
-    const preguntas = require('./public/preguntas.json')
-    socket.on("respuesta", (data) => {
-      console.log("Respuesta recibida del cliente: ", data);
-      const respuestas = data;
-    });
-
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
 });
+
+const players = [];
+
+io.on('connection', (socket) => {
+  console.log('Usuario conectado: ' + socket.id);
+
+  socket.on('join-game', (username) => {
+    console.log('El usuario ' + username + ' ha entrado en la sala.');
+    players.push({ id: socket.id, username });
+    socket.emit('joined-game');
+    io.emit('player-list', players);
+
+    if (players.length >= 2) {
+      io.emit('start-game');
+    }
+  });
+
+ /*socket.on('disconnect', () => {
+    console.log('User disconnected: ' + socket.id);
+    const index = players.findIndex((player) => player.id === socket.id);
+    if (index !== -1) {
+      const username = players[index].username;
+      players.splice(index, 1);
+      io.emit('player-list', players);
+      io.emit('player-disconnected', username);
+    }
+  });*/
+});
+
+
 
 httpServer.listen(3000, ()=>
     console.log(`Server listening at http://localhost:3000`)
