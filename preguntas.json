@@ -1,6 +1,4 @@
-{
-
-    "sanidad": [
+[
       {
         "pregunta": "¿Cuál es el nombre de la proteína que permite que el SARS-CoV-2 infecte a las células humanas?",
         "respuestas": {
@@ -31,8 +29,7 @@
         },
         "respuesta_correcta": "c"
       }
-    ],
-    "geografia": [
+    ,
       {
         "pregunta": "¿En qué continente se encuentra el monte Kilimanjaro?",
         "respuestas": {
@@ -63,8 +60,7 @@
         },
         "respuesta_correcta": "c"
       }
-    ],
-    "deportes": [
+    ,
       {
         "pregunta": "¿Qué deporte se juega en una pista llamada velódromo?",
         "respuestas": {
@@ -95,10 +91,7 @@
         },
         "respuesta_correcta": "c"
       }
-      
-    ],
-    
-    "pokemon": [
+    ,
       {
         "pregunta": "¿Cuál es el tipo de Pokémon de Pikachu?",
         "respuestas": {
@@ -129,8 +122,7 @@
         },
         "respuesta_correcta": "a"
       }
-    ],
-    "musica": [
+    ,
       {
         "pregunta": "¿Quién es el autor de la ópera 'La Traviata'?",
         "respuestas": {
@@ -161,6 +153,4 @@
         },
         "respuesta_correcta": "a"
       }
-    ]
-
-}
+]

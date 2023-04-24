@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Juego de preguntas</title>
+  </head>
+  <body>
+    <form id="join-game-form">
+      <label for="username-input">Nombre de usuario:</label>
+      <input type="text" id="username-input" required />
+      <button type="submit">Unirse a la sala</button>
+    </form>
+    <p id="game-message"></p>
+    <ul id="player-list"></ul>
 
-    </head>
-    <body>
-        Client
-        Entra el teu nom <input id="nicknameInput" type="text">
-        <button id="sendButton">Enviar</button>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.min.js"></script>
-    <script src="main.js" ></script>   
-    </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./client.js"></script>
+  </body>
 </html>
