@@ -3,11 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <title>Juego de preguntas</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.getJSON('../preguntas.json', function(data) {
+          var pregunta = data.preguntas[0].pregunta; // Obtener la primera pregunta del archivo JSON
+          $('#pregunta').text(pregunta); // Mostrar la pregunta en el elemento con id "pregunta"
+        });
+      });
+    </script>
   </head>
   <body>
     <h1>Juego de preguntas</h1>
     <p>Bienvenido al juego. Aquí irá la lógica para las preguntas.</p>
-
+    <div id="pregunta"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
   </body>

@@ -40,6 +40,10 @@ io.on('connection', (socket) => {
     if (players.length >= 2) {
       io.emit('start-game');
     }
+    
+    socket.emit('fase-pregunta');
+
+
   });
 
  /*socket.on('disconnect', () => {
