@@ -1,156 +1,152 @@
 [
-      {
-        "pregunta": "¿Cuál es el nombre de la proteína que permite que el SARS-CoV-2 infecte a las células humanas?",
-        "respuestas": {
-          "1": "ACE2",
-          "2": "CRISPR",
-          "3": "PD-L1",
-          "4": "BRCA1"
-        },
-        "respuesta_correcta": 1
-      },
-      {
-        "pregunta": "¿Qué tipo de célula es responsable de la producción de insulina en el cuerpo?",
-        "respuestas": {
-          "1": "Células alfa",
-          "2": "Células beta",
-          "3": "Células gamma",
-          "4": "Células delta"
-        },
-        "respuesta_correcta": 2
-      },
-      {
-        "pregunta": "¿Qué es la malaria?",
-        "respuestas": {
-          "1": "Una enfermedad viral",
-          "2": "Una enfermedad bacteriana",
-          "3": "Una enfermedad parasitaria",
-          "4": "Una enfermedad fúngica"
-        },
-        "respuesta_correcta": 3
-      }
-    ,
-      {
-        "pregunta": "¿En qué continente se encuentra el monte Kilimanjaro?",
-        "respuestas": {
-          "1": "América del Sur",
-          "2": "Asia",
-          "3": "África",
-          "4": "Oceanía"
-        },
-        "respuesta_correcta": 3
-      },
-      {
-        "pregunta": "¿Cuál es el país más grande del mundo en términos de superficie?",
-        "respuestas": {
-          "1": "Rusia",
-          "2": "China",
-          "3": "Estados Unidos",
-          "4": "Canadá"
-        },
-        "respuesta_correcta": 1
-      },
-      {
-        "pregunta": "¿Cuál es la capital de Australia?",
-        "respuestas": {
-          "1": "Sídney",
-          "2": "Melbourne",
-          "3": "Canberra",
-          "4": "Brisbane"
-        },
-        "respuesta_correcta": 3
-      }
-    ,
-      {
-        "pregunta": "¿Qué deporte se juega en una pista llamada velódromo?",
-        "respuestas": {
-          "1": "Ciclismo",
-          "2": "Atletismo",
-          "3": "Natación",
-          "4": "Gimnasia"
-        },
-        "respuesta_correcta": 1
-      },
-      {
-        "pregunta": "¿Qué jugador de fútbol ha ganado más balones de oro en la historia?",
-        "respuestas": {
-          "1": "Cristiano Ronaldo",
-          "2": "Lionel Messi",
-          "3": "Diego Maradona",
-          "4": "Pelé"
-        },
-        "respuesta_correcta": 2
-      },
-      {
-        "pregunta": "¿El caballo blanco de Santiago de que color es?",
-        "respuestas": {
-          "1": "Azul",
-          "2": "Rosa",
-          "3": "Blanco",
-          "4": "Negro"
-        },
-        "respuesta_correcta": 3
-      }
-    ,
-      {
-        "pregunta": "¿Cuál es el tipo de Pokémon de Pikachu?",
-        "respuestas": {
-          "1": "Agua",
-          "2": "Fuego",
-          "3": "Eléctrico",
-          "4": "Planta"
-        },
-        "respuesta_correcta": 3
-      },
-      {
-        "pregunta": "¿Qué tipo de Pokémon es Charmander?",
-        "respuestas": {
-          "1": "Agua",
-          "2": "Fuego",
-          "3": "Eléctrico",
-          "4": "Planta"
-        },
-        "respuesta_correcta": 2
-      },
-      {
-        "pregunta": "¿Cuál es el tipo de Pokémon de Mewtwo?",
-        "respuestas": {
-          "1": "Psíquico",
-          "2": "Fantasma",
-          "3": "Lucha",
-          "4": "Veneno"
-        },
-        "respuesta_correcta": 1
-      }
-    ,
-      {
-        "pregunta": "¿Quién es el autor de la ópera 'La Traviata'?",
-        "respuestas": {
-          "1": "Wolfgang Amadeus Mozart",
-          "2": "Giuseppe Verdi",
-          "3": "Ludwig van Beethoven",
-          "4": "Johann Sebastian Bach"
-        },
-        "respuesta_correcta": 2
-      },
-      {
-        "pregunta": "¿Qué banda de rock británica es conocida como los 'Cuatro Fabulosos'?",
-        "respuestas": {
-          "1": "The Beatles",
-          "2": "The Rolling Stones",
-          "3": "Queen",
-          "4": "Led Zeppelin"
-        },
-        "respuesta_correcta": 1
-      },
-      {
-        "pregunta": "¿Quién es la vocalista de la banda de rock Blondie?",
-        "respuestas": {
-          "1": "Debbie Harry",
-          "2": "Stevie Nicks",
-          "3": "Janis Joplin",
-          "4": "Patti Smith"
-        },
-        "respuesta_correcta": 1
-      }
+{
+"pregunta": "¿Cuál es el nombre de la proteína que permite que el SARS-CoV-2 infecte a las células humanas?",
+"opciones": {
+"A": "ACE2",
+"B": "CRISPR",
+"C": "PD-L1",
+"D": "BRCA1"
+},
+"respuesta_correcta": "A"
+},
+{
+"pregunta": "¿Qué tipo de célula es responsable de la producción de insulina en el cuerpo?",
+"opciones": {
+"A": "Células alfa",
+"B": "Células beta",
+"C": "Células gamma",
+"D": "Células delta"
+},
+"respuesta_correcta": "B"
+},
+{
+"pregunta": "¿Qué es la malaria?",
+"opciones": {
+"A": "Una enfermedad viral",
+"B": "Una enfermedad bacteriana",
+"C": "Una enfermedad parasitaria",
+"D": "Una enfermedad fúngica"
+},
+"respuesta_correcta": "C"
+},
+{
+"pregunta": "¿En qué continente se encuentra el monte Kilimanjaro?",
+"opciones": {
+"A": "América del Sur",
+"B": "Asia",
+"C": "África",
+"D": "Oceanía"
+},
+"respuesta_correcta": "C"
+},
+{
+"pregunta": "¿Cuál es el país más grande del mundo en términos de superficie?",
+"opciones": {
+"A": "Rusia",
+"B": "China",
+"C": "Estados Unidos",
+"D": "Canadá"
+},
+"respuesta_correcta": "A"
+},
+{
+"pregunta": "¿Cuál es la capital de Australia?",
+"opciones": {
+"A": "Sídney",
+"B": "Melbourne",
+"C": "Canberra",
+"D": "Brisbane"
+},
+"respuesta_correcta": "C"
+},
+{
+"pregunta": "¿Qué deporte se juega en una pista llamada velódromo?",
+"opciones": {
+"A": "Ciclismo",
+"B": "Atletismo",
+"C": "Natación",
+"D": "Gimnasia"
+},
+"respuesta_correcta": "A"
+},
+{
+"pregunta": "¿Qué jugador de fútbol ha ganado más balones de oro en la historia?",
+"opciones": {
+"A": "Cristiano Ronaldo",
+"B": "Lionel Messi",
+"C": "Diego Maradona",
+"D": "Pelé"
+},
+"respuesta_correcta": "B"
+},
+{
+"pregunta": "¿El caballo blanco de Santiago de qué color es?",
+"opciones": {
+"A": "Azul",
+"B": "Rosa",
+"C": "Blanco",
+"D": "Negro"
+},
+"respuesta_correcta": "C"
+},
+{
+"pregunta": "¿Cuál es el tipo de Pokémon de Pikachu?",
+"opciones": {
+"A": "Agua",
+"B": "Fuego",
+"C": "Eléctrico",
+"D": "Planta"
+},
+"respuesta_correcta": "C"
+},
+{
+"pregunta": "¿Qué tipo de Pokémon es Charmander?",
+"opciones": {
+"A": "Agua",
+"B": "Fuego",
+"C": "Eléctrico",
+"D": "Planta"
+},
+"respuesta_correcta": "B"
+},
+{
+"pregunta": "¿Cuál es el tipo de Pokémon de Mewtwo?",
+"opciones": {
+"A": "Psíquico",
+"B": "Fantasma",
+"C": "Lucha",
+"D": "Veneno"
+},
+"respuesta_correcta": "A"
+},
+{
+"pregunta": "¿Quién es el autor de la ópera 'La Traviata'?",
+"opciones": {
+"A": "Wolfgang Amadeus Mozart",
+"B": "Giuseppe Verdi",
+"C": "Ludwig van Beethoven",
+"D": "Johann Sebastian Bach"
+},
+"respuesta_correcta": "B"
+},
+{
+"pregunta": "¿Qué banda de rock británica es conocida como los 'Cuatro Fabulosos'?",
+"opciones": {
+"A": "The Beatles",
+"B": "The Rolling Stones",
+"C": "Queen",
+"D": "Led Zeppelin"
+},
+"respuesta_correcta": "A"
+},
+{
+"pregunta": "¿Quién es la vocalista de la banda de rock Blondie?",
+"opciones": {
+"A": "Debbie Harry",
+"B": "Stevie Nicks",
+"C": "Janis Joplin",
+"D": "Patti Smith"
+},
+"respuesta_correcta": "A"
+}
 ]
