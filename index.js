@@ -9,6 +9,10 @@ const preguntas = require('./preguntas.json');
 const app = express();
 const httpServer = createServer(app);
 
+app.get('/preguntas.json', (req, res) => {
+  res.sendFile(__dirname + '/preguntas.json');
+});
+
 app.use(express.static("public"));
 
 const io = new Server(httpServer, {});
@@ -40,6 +44,7 @@ app.get('/', (req, res) => {
   //     const respuestas = data;
   //   });
 
+
 const players = [];
 
 io.on('connection', (socket) => {
@@ -52,11 +57,13 @@ io.on('connection', (socket) => {
     io.emit('player-list', players);
 
     if (players.length >= 2) {
-      io.emit('start-game');
+      const primeraPregunta = preguntas[0]; // se obtiene la primera pregunta
+      io.emit('start-game', primeraPregunta); // se envía la primera pregunta a todos los usuarios
     }
   });
 
- /*socket.on('disconnect', () => {
+
+ socket.on('disconnect', () => {
     console.log('User disconnected: ' + socket.id);
     const index = players.findIndex((player) => player.id === socket.id);
     if (index !== -1) {
@@ -65,7 +72,7 @@ io.on('connection', (socket) => {
       io.emit('player-list', players);
       io.emit('player-disconnected', username);
     }
-  });*/
+  });
 });
 
 

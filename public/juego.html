@@ -6,8 +6,16 @@
   </head>
   <body>
     <h1>Juego de preguntas</h1>
-    <p>Bienvenido al juego. Aquí irá la lógica para las preguntas.</p>
-
+    <form id="join-game-form">
+    <input id="pregunta" type="text" readonly>
+    <div id="opciones">
+      <button id="opcion-a">A</button>
+      <button id="opcion-b">B</button>
+      <button id="opcion-c">C</button>
+      <button id="opcion-d">D</button>
+    </div>
+    <div id="mensaje"></div>
+  </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
   </body>

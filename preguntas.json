@@ -2,155 +2,155 @@
       {
         "pregunta": "¿Cuál es el nombre de la proteína que permite que el SARS-CoV-2 infecte a las células humanas?",
         "respuestas": {
-          "a": "ACE2",
-          "b": "CRISPR",
-          "c": "PD-L1",
-          "d": "BRCA1"
+          "1": "ACE2",
+          "2": "CRISPR",
+          "3": "PD-L1",
+          "4": "BRCA1"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       },
       {
         "pregunta": "¿Qué tipo de célula es responsable de la producción de insulina en el cuerpo?",
         "respuestas": {
-          "a": "Células alfa",
-          "b": "Células beta",
-          "c": "Células gamma",
-          "d": "Células delta"
+          "1": "Células alfa",
+          "2": "Células beta",
+          "3": "Células gamma",
+          "4": "Células delta"
         },
-        "respuesta_correcta": "b"
+        "respuesta_correcta": 2
       },
       {
         "pregunta": "¿Qué es la malaria?",
         "respuestas": {
-          "a": "Una enfermedad viral",
-          "b": "Una enfermedad bacteriana",
-          "c": "Una enfermedad parasitaria",
-          "d": "Una enfermedad fúngica"
+          "1": "Una enfermedad viral",
+          "2": "Una enfermedad bacteriana",
+          "3": "Una enfermedad parasitaria",
+          "4": "Una enfermedad fúngica"
         },
-        "respuesta_correcta": "c"
+        "respuesta_correcta": 3
       }
     ,
       {
         "pregunta": "¿En qué continente se encuentra el monte Kilimanjaro?",
         "respuestas": {
-          "a": "América del Sur",
-          "b": "Asia",
-          "c": "África",
-          "d": "Oceanía"
+          "1": "América del Sur",
+          "2": "Asia",
+          "3": "África",
+          "4": "Oceanía"
         },
-        "respuesta_correcta": "c"
+        "respuesta_correcta": 3
       },
       {
         "pregunta": "¿Cuál es el país más grande del mundo en términos de superficie?",
         "respuestas": {
-          "a": "Rusia",
-          "b": "China",
-          "c": "Estados Unidos",
-          "d": "Canadá"
+          "1": "Rusia",
+          "2": "China",
+          "3": "Estados Unidos",
+          "4": "Canadá"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       },
       {
         "pregunta": "¿Cuál es la capital de Australia?",
         "respuestas": {
-          "a": "Sídney",
-          "b": "Melbourne",
-          "c": "Canberra",
-          "d": "Brisbane"
+          "1": "Sídney",
+          "2": "Melbourne",
+          "3": "Canberra",
+          "4": "Brisbane"
         },
-        "respuesta_correcta": "c"
+        "respuesta_correcta": 3
       }
     ,
       {
         "pregunta": "¿Qué deporte se juega en una pista llamada velódromo?",
         "respuestas": {
-          "a": "Ciclismo",
-          "b": "Atletismo",
-          "c": "Natación",
-          "d": "Gimnasia"
+          "1": "Ciclismo",
+          "2": "Atletismo",
+          "3": "Natación",
+          "4": "Gimnasia"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       },
       {
         "pregunta": "¿Qué jugador de fútbol ha ganado más balones de oro en la historia?",
         "respuestas": {
-          "a": "Cristiano Ronaldo",
-          "b": "Lionel Messi",
-          "c": "Diego Maradona",
-          "d": "Pelé"
+          "1": "Cristiano Ronaldo",
+          "2": "Lionel Messi",
+          "3": "Diego Maradona",
+          "4": "Pelé"
         },
-        "respuesta_correcta": "b"
+        "respuesta_correcta": 2
       },
       {
         "pregunta": "¿El caballo blanco de Santiago de que color es?",
         "respuestas": {
-          "a": "Azul",
-          "b": "Rosa",
-          "c": "Blanco",
-          "d": "Negro"
+          "1": "Azul",
+          "2": "Rosa",
+          "3": "Blanco",
+          "4": "Negro"
         },
-        "respuesta_correcta": "c"
+        "respuesta_correcta": 3
       }
     ,
       {
         "pregunta": "¿Cuál es el tipo de Pokémon de Pikachu?",
         "respuestas": {
-          "a": "Agua",
-          "b": "Fuego",
-          "c": "Eléctrico",
-          "d": "Planta"
+          "1": "Agua",
+          "2": "Fuego",
+          "3": "Eléctrico",
+          "4": "Planta"
         },
-        "respuesta_correcta": "c"
+        "respuesta_correcta": 3
       },
       {
         "pregunta": "¿Qué tipo de Pokémon es Charmander?",
         "respuestas": {
-          "a": "Agua",
-          "b": "Fuego",
-          "c": "Eléctrico",
-          "d": "Planta"
+          "1": "Agua",
+          "2": "Fuego",
+          "3": "Eléctrico",
+          "4": "Planta"
         },
-        "respuesta_correcta": "b"
+        "respuesta_correcta": 2
       },
       {
         "pregunta": "¿Cuál es el tipo de Pokémon de Mewtwo?",
         "respuestas": {
-          "a": "Psíquico",
-          "b": "Fantasma",
-          "c": "Lucha",
-          "d": "Veneno"
+          "1": "Psíquico",
+          "2": "Fantasma",
+          "3": "Lucha",
+          "4": "Veneno"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       }
     ,
       {
         "pregunta": "¿Quién es el autor de la ópera 'La Traviata'?",
         "respuestas": {
-          "a": "Wolfgang Amadeus Mozart",
-          "b": "Giuseppe Verdi",
-          "c": "Ludwig van Beethoven",
-          "d": "Johann Sebastian Bach"
+          "1": "Wolfgang Amadeus Mozart",
+          "2": "Giuseppe Verdi",
+          "3": "Ludwig van Beethoven",
+          "4": "Johann Sebastian Bach"
         },
-        "respuesta_correcta": "b"
+        "respuesta_correcta": 2
       },
       {
         "pregunta": "¿Qué banda de rock británica es conocida como los 'Cuatro Fabulosos'?",
         "respuestas": {
-          "a": "The Beatles",
-          "b": "The Rolling Stones",
-          "c": "Queen",
-          "d": "Led Zeppelin"
+          "1": "The Beatles",
+          "2": "The Rolling Stones",
+          "3": "Queen",
+          "4": "Led Zeppelin"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       },
       {
         "pregunta": "¿Quién es la vocalista de la banda de rock Blondie?",
         "respuestas": {
-          "a": "Debbie Harry",
-          "b": "Stevie Nicks",
-          "c": "Janis Joplin",
-          "d": "Patti Smith"
+          "1": "Debbie Harry",
+          "2": "Stevie Nicks",
+          "3": "Janis Joplin",
+          "4": "Patti Smith"
         },
-        "respuesta_correcta": "a"
+        "respuesta_correcta": 1
       }
 ]
