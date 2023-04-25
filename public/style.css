@@ -1,0 +1,13 @@
+.main {
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+}
+
+.child {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+}

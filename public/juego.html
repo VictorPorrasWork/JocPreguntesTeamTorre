@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>Juego de preguntas</title>
-    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
     <div class="main">
     <h1>Juego de preguntas</h1>
+    <div class="child">
     <form id="join-game-form">
     <input id="pregunta" type="text" readonly>
       <div id="opciones">
@@ -16,8 +17,9 @@
         <button id="opcion-c">C</button>
         <button id="opcion-d">D</button>
       </div>
-    <div id="mensaje"></div>
-    </form>
+      <div id="mensaje"></div>
+      </form>
+      </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
