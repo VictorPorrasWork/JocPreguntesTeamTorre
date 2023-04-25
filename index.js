@@ -29,6 +29,20 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
+  
+
+    // const preguntas = require('./public/preguntas.json')
+    // socket.on("respuesta", (data) => {
+    //   console.log("Respuesta recibida del cliente: ", data);
+    //   const respuestas = data;
+    // });
+
+//});
+
+  //  socket.on("respuesta", (data) => {
+  //     console.log("Respuesta recibida del cliente: ", data);
+  //     const respuestas = data;
+  //   });
 
 
 const players = [];
