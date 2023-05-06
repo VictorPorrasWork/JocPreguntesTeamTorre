@@ -5,13 +5,16 @@
     <title>Juego de preguntas</title>
   </head>
   <body>
-    <form id="join-game-form">
-      <label for="username-input">Nombre de usuario:</label>
-      <input type="text" id="username-input" required />
+    <form id="login">
+      <label for="player">Nombre de usuario:</label>
+      <input type="text" id="player" required />
       <button type="submit">Unirse a la sala</button>
     </form>
     <p id="game-message"></p>
     <ul id="player-list"></ul>
+
+    <!-- Botón de inicio de partida -->
+    <button id="start-button" style="display:none;">Iniciar partida</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
