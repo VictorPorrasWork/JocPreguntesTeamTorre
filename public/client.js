@@ -1,139 +1,68 @@
-const socket = io();
-
-const joinGameForm = document.getElementById('join-game-form');
-const usernameInput = document.getElementById('username-input');
-
-const preguntaInput = document.getElementById('pregunta');
-const opcionInputA = document.getElementById('opcion-a');
-const opcionInputB = document.getElementById('opcion-b');
-const opcionInputC = document.getElementById('opcion-c');
-const opcionInputD = document.getElementById('opcion-d');
-
-const respuestaButonA = document.getElementById('respuesta-a');
-const respuestaButonB = document.getElementById('respuesta-b');
-const respuestaButonC = document.getElementById('respuesta-c');
-const respuestaButonD = document.getElementById('respuesta-d');
-
-
-joinGameForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const username = usernameInput.value.trim();
-  if (username) {
-    socket.emit('join-game', username);
-    joinGameForm.style.display = 'none';
-  }
+// Crea una instancia del cliente Socket.IO y se une a la sala
+const socket = io('http://localhost:3000');
+socket.on('connect', () => {
+  console.log('Conectado al servidor');
 });
 
-socket.on('joined-game', () => {
-  const gameMessage = document.getElementById('game-message');
-  gameMessage.textContent = 'Usted está en partida';
+let playerName;
+let isAdmin = false;
+
+document.querySelector('#login').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const playerInput = document.querySelector('#player');
+  playerName = playerInput.value.trim();
+  socket.emit('join-room', playerName);
 });
 
+// Escucha el evento de confirmación de unirse a la sala
+socket.on('room-joined', (name) => {
+  console.log(`Te has unido a la sala, ${name}!`);
+  const gameMessage = document.querySelector('#game-message');
+  gameMessage.textContent = `Te has unido a la sala, ${name}! Esperando a otros jugadores...`;
+});
+
+// Escucha el evento de actualización de la lista de jugadores en la sala
 socket.on('player-list', (players) => {
-  const playerList = document.getElementById('player-list');
+  console.log('Actualización de lista de jugadores:', players);
+  const playerList = document.querySelector('#player-list');
   playerList.innerHTML = '';
-  players.forEach((player) => {
+  players.forEach((player, index) => {
     const li = document.createElement('li');
-    li.textContent = player.username;
+    li.textContent = player;
     playerList.appendChild(li);
+
+    // Si el jugador actual es el administrador, establece la variable isAdmin a true
+    if (player === 'administrador' && playerName === 'administrador') {
+      isAdmin = true;
+      socket.emit('set-admin');
+    }
   });
+
+  // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" si hay suficientes jugadores en la sala
+  if (isAdmin && players.length >= 2) {
+    const startButton = document.querySelector('#start-button');
+    startButton.style.display = 'block';
+    
+    // Evento click en el botón "Iniciar partida"
+    startButton.addEventListener('click', () => {
+        socket.emit('game-started');
+      });
+  }
+
 });
 
-socket.on('start-game', () => {
+// Escucha el evento de inicio de partida
+socket.on('game-started', () => {
+  console.log('La partida ha empezado');
   window.location.href = '/juego.html';
 });
 
-socket.on('start-game', (pregunta) => {
-  preguntaInput.value = pregunta.pregunta;
-  opcionInputA.value = pregunta.opciones["A"];
-  opcionInputB.value = pregunta.opciones["B"];
-  opcionInputC.value = pregunta.opciones["C"];
-  opcionInputD.value = pregunta.opciones["D"];
-
-  const respuesta_correcta = pregunta.respuesta_correcta;
-
-  // Setear un temporizador para el usuario
-  let tiempoRestante = 60; // 60 segundos
-  const tiempoRestanteDiv = document.getElementById('tiempo-restante');
-  tiempoRestanteDiv.textContent = tiempoRestante + ' segundos restantes';
-  const interval = setInterval(() => {
-    tiempoRestante--;
-    tiempoRestanteDiv.textContent = tiempoRestante + ' segundos restantes';
-    if (tiempoRestante === 0) {
-      clearInterval(interval);
-      // Continuar con la siguiente pregunta o finalizar el juego
-    }
-  }, 1000);
+// Si el jugador actual es el administrador, muestra el botón "Iniciar partida" y envía un evento al servidor cuando se hace clic
+socket.on('admin-status', (status) => {
+  isAdmin = status;
 });
 
-socket.on('respuesta', (respuestaSeleccionada) => {
-  const respuesta_correcta = preguntaActual.respuesta_correcta;
-  if (respuestaSeleccionada === respuesta_correcta) {
-    const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = '¡Respuesta correcta!';
-  } else {
-    const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = 'Respuesta incorrecta. La respuesta correcta es ' + respuesta_correcta;
-  }
-});
-
-function cargarPreguntas() {
-  fetch('/../preguntas.json')
-    .then(response => response.json())
-    .then(preguntas => {
-      preguntas.forEach((pregunta) => {
-        preguntaInput.value = pregunta.pregunta;
-        opcionInputA.value = pregunta.opciones["A"];
-        opcionInputB.value = pregunta.opciones["B"];
-        opcionInputC.value = pregunta.opciones["C"];
-        opcionInputD.value = pregunta.opciones["D"];
-
-        respuestaButonA.addEventListener('click', () => {
-          const respuestaSeleccionada = 'A';
-          socket.emit('respuesta', respuestaSeleccionada);
-        });
-        respuestaButonB.addEventListener('click', () => {
-          const respuestaSeleccionada = 'B';
-          socket.emit('respuesta', respuestaSeleccionada);
-        });
-        respuestaButonC.addEventListener('click', () => {
-          const respuestaSeleccionada = 'C';
-          socket.emit('respuesta', respuestaSeleccionada);
-        });
-        respuestaButonD.addEventListener('click', () => {
-          const respuestaSeleccionada = 'D';
-          socket.emit('respuesta', respuestaSeleccionada);
-        });
-      });
-      socket.emit('preguntas-cargadas'); // Avisar al servidor que se han cargado las preguntas
-    })
-    .catch(error => {
-      console.error('Error al cargar la primera pregunta:', error);
-    });
-}
-
-socket.on('connect', () => {
-  cargarPreguntas();
-});
-
-
-socket.on('respuesta', (respuestaSeleccionada) => {
-  const respuesta_correcta = preguntaActual.respuesta_correcta;
-  if (respuestaSeleccionada === respuesta_correcta) {
-    const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = '¡Respuesta correcta!';
-  } else {
-    const mensaje = document.getElementById('mensaje');
-    mensaje.textContent = 'Respuesta incorrecta. La respuesta correcta es ' + respuesta_correcta;
-  }
-});
-
-
-socket.on('player-disconnected', (username) => {
-  const playerList = document.getElementById('player-list');
-  const li = playerList.querySelector(':contains("' + username + '")');
-  if (li) {
-    playerList.removeChild(li);
-  }
-
+socket.on('game-ended', () => {
+  console.log('La partida ha terminado');
+  window.location.href = '/podio.html';
 });
