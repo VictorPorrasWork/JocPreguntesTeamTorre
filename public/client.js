@@ -7,19 +7,20 @@ socket.on('connect', () => {
 let playerName;
 let isAdmin = false;
 
+
 document.querySelector('#login').addEventListener('submit', (event) => {
   event.preventDefault();
   const playerInput = document.querySelector('#player');
   playerName = playerInput.value.trim();
   socket.emit('join-room', playerName);
-});
-
-// Escucha el evento de confirmación de unirse a la sala
-socket.on('room-joined', (name) => {
+  });
+  
+  // Escucha el evento de confirmación de unirse a la sala
+  socket.on('room-joined', (name) => {
   console.log(`Te has unido a la sala, ${name}!`);
   const gameMessage = document.querySelector('#game-message');
   gameMessage.textContent = `Te has unido a la sala, ${name}! Esperando a otros jugadores...`;
-});
+  });
 
 // Escucha el evento de actualización de la lista de jugadores en la sala
 socket.on('player-list', (players) => {
@@ -45,16 +46,47 @@ socket.on('player-list', (players) => {
     
     // Evento click en el botón "Iniciar partida"
     startButton.addEventListener('click', () => {
-        socket.emit('game-started');
-      });
+      socket.emit('game-started', playerName);
+      }); 
   }
 
 });
 
 // Escucha el evento de inicio de partida
-socket.on('game-started', () => {
-  console.log('La partida ha empezado');
+  socket.on('game-started', () => {
   window.location.href = '/juego.html';
+
+  // Emitir el evento primeraPregunta dentro de la función game-started
+  console.log("llega");
+  //socket.emit('primeraPregunta'); 
+
+
+  // Escucha el evento de la primera pregunta
+    socket.on('primeraPregunta', (pregunta) => {
+      //console.log(`Recibiendo la primera pregunta: ${pregunta}`);
+      // Verifica que la cadena JSON recibida sea válida
+      let preguntaObj = null;
+      try {
+        preguntaObj = JSON.parse(pregunta);
+      } catch (error) {
+        console.error('Error al convertir la cadena JSON en un objeto JavaScript:', error);
+        return;
+      }
+  
+  // Actualiza la pregunta en la página
+  document.getElementById('pregunta').value = preguntaObj.pregunta;
+  
+  // Actualizar las opciones en la vista
+  document.getElementById('opcion-a').value = preguntaObj.opcions[0];
+  document.getElementById('opcion-b').value = preguntaObj.opcions[1];
+  document.getElementById('opcion-c').value = preguntaObj.opcions[2];
+  document.getElementById('opcion-d').value = preguntaObj.opcions[3];
+  
+  // Ocultar el mensaje de respuesta en la vista
+    const mensaje = document.querySelector('#mensaje');
+    mensaje.textContent = '';
+  });
+
 });
 
 // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" y envía un evento al servidor cuando se hace clic
