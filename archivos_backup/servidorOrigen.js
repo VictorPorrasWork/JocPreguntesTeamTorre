@@ -57,38 +57,21 @@ io.on('connection', (socket) => {
 
       socket.on('solicitopregunta', () => {
         let index = 0;
-        let puntuacion = 0;
         const intervalId = setInterval(() => {
           const pregunta = preguntas[index].pregunta;
           const opciones = preguntas[index].opcions;
-          const opcionBona = preguntas[index].opcioBona;
-          //llega
-          //console.log(preguntas[index].pregunta);
-          //console.log(preguntas[index].opcions);
-          //console.log(preguntas[index].opcioBona);
-          io.emit('pregunta', pregunta, ...opciones);
+          io.emit('pregunta', pregunta, opciones);
           index++;
           if (index === preguntas.length) {
             clearInterval(intervalId);
-            io.emit('resultadoFinal', puntuacion);
           }
         }, 10000);
-      
-        socket.on('respuesta', (respuestaUsuario) => {
-          const preguntaActual = preguntas[index - 1];
-          if (preguntaActual.opcioBona === respuestaUsuario) {
-            puntuacion++;
-            console.log('Respuesta correcta. Puntuación:', puntuacion);
-          } else {
-            console.log('Respuesta incorrecta. Puntuación:', puntuacion);
-          }
-        });
       });
-      
-      
-     
-   });
 
+
+
+
+});
 
 // Inicia el servidor
 httpServer.listen(3000, () => {
