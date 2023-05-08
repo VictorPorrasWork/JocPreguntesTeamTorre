@@ -4,30 +4,18 @@ const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
 const fs = require('fs');
 const path = require('path');
+const preguntas = require('./public/preguntas.json');
 
 // Ruta para servir archivos estáticos
 app.use(express.static(__dirname + '/public'));
 
-// Ruta principal para servir el archivo login.html
+// Ruta principal para servir el archivo juego.html
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/login.html');
-});
-
-// Ruta para servir el archivo juego.html
-app.get('/juego.html', (req, res) => {
   res.sendFile(__dirname + '/public/juego.html');
 });
 
 // Lista de jugadores en la sala
 let players = [];
-
-// Cargar las preguntas desde el archivo JSON
-let preguntas = [];
-const preguntasPath = path.join(__dirname, 'public', 'preguntas.json');
-fs.readFile(preguntasPath, (err, data) => {
-    if (err) throw err;
-    preguntas = JSON.parse(data);
-});
 
 // Escucha las conexiones de los clientes
 io.on('connection', (socket) => {
@@ -64,12 +52,10 @@ io.on('connection', (socket) => {
   // Escucha el evento de inicio de la partida
   socket.on('game-started', () => {
       console.log('La partida ha empezado');
-      io.emit('game-go');
-      // Emitir la primera pregun1ta
-      let pregunta = JSON.stringify(preguntas[0]);
-      io.emit('primeraPregunta', pregunta);
-      console.log(`Enviando la primera pregunta: ${JSON.stringify(preguntas[0])}`);
+      io.emit('game-go', preguntas[0].pregunta, preguntas[0].opcions);
+
   });
+
 
 });
 

@@ -64,39 +64,21 @@ socket.on('player-list', (players) => {
   });
 
 // Escucha el evento de inicio de partida
-  socket.on('game-go', (playerName) => {
-  window.location.href = '/juego.html';
+socket.on('game-go', (pregunta, opciones) => {
+  // Mostrar el formulario de juego y ocultar el de inicio de sesión
+  const loginForm = document.querySelector('#login');
+  loginForm.style.display = 'none';
+  const partidaForm = document.querySelector('#partida');
+  partidaForm.style.display = 'block';
 
-});
-  // Emitir el evento primeraPregunta dentro de la función game-started
-  console.log("llega");
-
-  // Escucha el evento de la primera pregunta
-    socket.on('primeraPregunta', (pregunta) => {
-
-      console.log(pregunta);
-      // Verifica que la cadena JSON recibida sea válida
-      let preguntaObj = null;
-      try {
-        preguntaObj = JSON.parse(pregunta);
-      } catch (error) {
-        console.error('Error al convertir la cadena JSON en un objeto JavaScript:', error);
-        return;
-      }
-  
-  // Actualiza la pregunta en la página
-  document.getElementById('pregunta').value = preguntaObj.pregunta;
-  
-  // Actualizar las opciones en la vista
-  document.getElementById('opcion-a').value = preguntaObj.opcions[0];
-  document.getElementById('opcion-b').value = preguntaObj.opcions[1];
-  document.getElementById('opcion-c').value = preguntaObj.opcions[2];
-  document.getElementById('opcion-d').value = preguntaObj.opcions[3];
-  
-  // Ocultar el mensaje de respuesta en la vista
-    const mensaje = document.querySelector('#mensaje');
-    mensaje.textContent = '';
+  // Mostrar la primera pregunta y opciones en el formulario de juego
+  const preguntaInput = document.querySelector('#pregunta');
+  preguntaInput.value = pregunta;
+  const opcionesInputs = document.querySelectorAll('#opciones input');
+  opcionesInputs.forEach((input, index) => {
+    input.value = opciones[index];
   });
+});
 
 
 
