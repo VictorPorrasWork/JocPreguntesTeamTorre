@@ -42,6 +42,10 @@ io.on('connection', (socket) => {
 
     // Envía un mensaje de confirmación al jugador
     socket.emit('room-joined', playerName);
+
+    // Envía el nombre de usuario al cliente recién conectado
+    socket.emit('player-name', playerName);
+
     // Envía un mensaje a todos los jugadores en la sala con la lista actualizada de jugadores
     io.emit('player-list', players.map(player => player.name));
     console.log(`${playerName} se ha unido a la sala.`);
@@ -60,9 +64,10 @@ io.on('connection', (socket) => {
   // Escucha el evento de inicio de la partida
   socket.on('game-started', () => {
       console.log('La partida ha empezado');
-      io.emit('game-started');
-      // Emitir la primera pregunta
-      socket.emit('primeraPregunta', JSON.stringify(preguntas[0]));
+      io.emit('game-go');
+      // Emitir la primera pregun1ta
+      let pregunta = JSON.stringify(preguntas[0]);
+      io.emit('primeraPregunta', pregunta);
       console.log(`Enviando la primera pregunta: ${JSON.stringify(preguntas[0])}`);
   });
 
