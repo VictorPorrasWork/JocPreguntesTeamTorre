@@ -13,8 +13,16 @@ document.querySelector('#login').addEventListener('submit', (event) => {
   const playerInput = document.querySelector('#player');
   playerName = playerInput.value.trim();
   socket.emit('join-room', playerName);
-  });
+ 
   
+  // Muestra el nombre de usuario en la tabla de usuarios
+  const tablaUsuarios = document.querySelector('#tablausuarios tbody');
+  const row = tablaUsuarios.insertRow();
+  const cell = row.insertCell();
+  cell.textContent = playerName;
+  
+});
+
   // Escucha el evento de confirmación de unirse a la sala
   socket.on('room-joined', (name) => {
   console.log(`Te has unido a la sala, ${name}!`);
