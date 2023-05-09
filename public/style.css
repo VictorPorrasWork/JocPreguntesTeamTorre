@@ -13,13 +13,17 @@ h1 {
 }
 
 #login.hidden {
-    display: block;
+    /*display: block;*/
   }
 
 #partida.hidden {
     display: none;
   }
 
+#podio.hidden {
+  display: none;
+}
+  
 #pregunta {
 width: 60%;
 font-size: 18px;
