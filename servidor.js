@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
          
           //llega pregunta opciones opcionBona
           //poner for
-          io.emit('pregunta', pregunta, ...opciones);
+          io.emit('pregunta', pregunta, opciones);
           index++;
           if (index <= preguntas.length) {
             console.log(preguntas.length);
