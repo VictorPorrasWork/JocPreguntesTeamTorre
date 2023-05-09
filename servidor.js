@@ -16,14 +16,13 @@ app.get('/', (req, res) => {
 // Lista de jugadores en la sala
 let players = [];
 let index = 0;
-let puntuacion = 0;
 let intervalId = null;
 
 io.on('connection', (socket) => {
   console.log('Nuevo jugador conectado');
 
   socket.on('join-room', (playerName) => {
-    players.push({ name: playerName, socketId: socket.id });
+    players.push({ name: playerName, socketId: socket.id, score: 0 });
     socket.emit('room-joined', playerName);
     socket.emit('player-name', playerName);
     io.emit('player-list', players.map(player => player.name));
@@ -43,47 +42,42 @@ io.on('connection', (socket) => {
   });
 
   socket.on('solicitopregunta', () => {
-    intervalId = setInterval(() => {
-        if (index < preguntas.length) {
-          index++;
-          const pregunta = preguntas[index].pregunta;
-          const opciones = preguntas[index].opcions;
-          const opcionBona = preguntas[index].opcioBona;
-          io.emit('pregunta', pregunta, opciones);
-        } else {
-          io.emit('resultadoFinal', puntuacion);
-        }
-    }, 5000);
-  
     const pregunta = preguntas[index].pregunta;
     const opciones = preguntas[index].opcions;
     const opcionBona = preguntas[index].opcioBona;
-  
+    
     io.emit('pregunta', pregunta, opciones);
+  
+    intervalId = setInterval(() => {
+      if (index < preguntas.length - 1) {
+        index++;
+        const pregunta = preguntas[index].pregunta;
+        const opciones = preguntas[index].opcions;
+        const opcionBona = preguntas[index].opcioBona;
+        io.emit('pregunta', pregunta, opciones);
+      } else {
+        io.emit('resultadoFinal', players.map(player => ({ name: player.name, score: player.score })));
+        clearInterval(intervalId);
+      }
+    }, 20000);
   });
+  
   
   socket.on('respuesta', (respuestaUsuario) => {
-    clearInterval(intervalId);
+    const jugador = players.find(player => player.socketId === socket.id);
     const preguntaActual = preguntas[index];
     if (preguntaActual.opcioBona === respuestaUsuario) {
-      puntuacion++;
-      console.log('Respuesta correcta. Puntuación:', puntuacion);
-      io.emit('puntuacion-actualizada', puntuacion);
+      jugador.score++;
+      console.log(`${jugador.name} ha respondido correctamente. Puntuación: ${jugador.score}`);
+      io.emit('puntuacion-actualizada', jugador.name, jugador.score);
     } else {
-      console.log('Respuesta incorrecta. Puntuación:', puntuacion);
+      console.log(`${jugador.name} ha respondido incorrectamente. Puntuación: ${jugador.score}`);
     }
     
-    if (index < preguntas.length) {
-      index++;
-      const pregunta = preguntas[index].pregunta;
-      const opciones = preguntas[index].opcions;
-      const opcionBona = preguntas[index].opcioBona;
-      io.emit('pregunta', pregunta, opciones);
-    } else {
-      io.emit('resultadoFinal', puntuacion);
-    }
+    clearInterval(intervalId);
   });
 });
+
 
 httpServer.listen(3000, () => {
   console.log('Servidor iniciado en http://localhost:3000');
