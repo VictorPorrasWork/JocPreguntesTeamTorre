@@ -83,47 +83,18 @@ socket.on('saludo', () => {
   socket.emit('solicitopregunta');
 });
 
-// Recibimos la pregunta del servidor y la mostramos en el formulario
+// Escucha el evento de inicio de partida io.emit('pregunta', pregunta, opciones);
 socket.on('pregunta', (pregunta, opciones) => {
-  //no llega, no se printan las preguntas ni las respuestas
-  const preguntaElem = document.querySelector('#pregunta');
-  preguntaElem.textContent = pregunta;
-  const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-  opcionesElems.forEach((opcionElem, index) => {
-    opcionElem.value = opciones[index];
-  });
+
+// Mostrar la primera pregunta y opciones en el formulario de juego
+    document.getElementById('pregunta').value = pregunta;
+    document.getElementById('opcion1').value = opciones[0];
+    document.getElementById('opcion2').value = opciones[1];
+    document.getElementById('opcion3').value = opciones[2];
+    document.getElementById('opcion4').value = opciones[3];
 });
 
-// Manejar la respuesta del usuario
-const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-opcionesElems.forEach((opcionElem) => {
-  const respuestaBtn = document.querySelector(`#respuesta-${opcionElem.id.slice(-1)}`);
-  respuestaBtn.addEventListener('click', () => {
-    const respuesta = opcionElem.value;
-    socket.emit('respuesta', respuesta);
-  });
-});
 
-// Mostrar el resultado de la pregunta
-socket.on('resultado', (resultado, respuestaCorrecta) => {
-  const resultadoElem = document.querySelector('#resultado');
-  if (resultado) {
-    resultadoElem.value = '¡Correcto!';
-  } else {
-    resultadoElem.value = 'Incorrecto. La respuesta correcta es: ' + respuestaCorrecta;
-  }
-});
-
-// Mostrar el resultado final del juego
-socket.on('resultadoFinal', (puntuacion) => {
-  const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
-});
-
-// Mostrar el mensaje de error
-socket.on('error', (mensaje) => {
-  alert(mensaje);
-});
 
 // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" y envía un evento al servidor cuando se hace clic
 socket.on('admin-status', (status) => {
