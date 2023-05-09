@@ -88,19 +88,18 @@ socket.on('pregunta', (pregunta, opciones) => {
   console.log(opciones);
   const preguntaElem = document.querySelector('#pregunta');
   preguntaElem.value = pregunta;
-  const opcionesElems = document.querySelectorAll('#opciones input[type="text"]');
+  const opcionesElems = document.querySelectorAll('#opciones button');
   for (let i = 0; i < opcionesElems.length; i++) {
-    opcionesElems[i].value = opciones[i];
+    opcionesElems[i].textContent = opciones[i];
   }
 });
 
-/*
-// Manejar la respuesta del usuario
-const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-opcionesElems.forEach((opcionElem) => {
-  const respuestaBtn = document.querySelector(`#respuesta-${opcionElem.id.slice(-1)}`);
-  respuestaBtn.addEventListener('click', () => {
-    const respuesta = opcionElem.value;
+// Agrega este bloque de código
+const opcionesElems = document.querySelectorAll('#opciones button');
+opcionesElems.forEach((opcionBtn) => {
+  opcionBtn.addEventListener('click', (event) => {
+    event.preventDefault(); // Agrega esta línea para evitar la recarga de la página
+    const respuesta = opcionBtn.textContent;
     socket.emit('respuesta', respuesta);
   });
 });
@@ -120,7 +119,7 @@ socket.on('resultadoFinal', (puntuacion) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
   resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
 });
-*/
+
 // Mostrar el mensaje de error
 socket.on('error', (mensaje) => {
   alert(mensaje);
