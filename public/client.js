@@ -85,21 +85,21 @@ socket.on('saludo', () => {
 
 // Recibimos la pregunta del servidor y la mostramos en el formulario
 socket.on('pregunta', (pregunta, opciones) => {
-  //no llega, no se printan las preguntas ni las respuestas
+  console.log(opciones);
   const preguntaElem = document.querySelector('#pregunta');
-  preguntaElem.textContent = pregunta;
-  const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-  opcionesElems.forEach((opcionElem, index) => {
-    opcionElem.value = opciones[index];
-  });
+  preguntaElem.value = pregunta;
+  const opcionesElems = document.querySelectorAll('#opciones button');
+  for (let i = 0; i < opcionesElems.length; i++) {
+    opcionesElems[i].textContent = opciones[i];
+  }
 });
 
-// Manejar la respuesta del usuario
-const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-opcionesElems.forEach((opcionElem) => {
-  const respuestaBtn = document.querySelector(`#respuesta-${opcionElem.id.slice(-1)}`);
-  respuestaBtn.addEventListener('click', () => {
-    const respuesta = opcionElem.value;
+// Agrega este bloque de código
+const opcionesElems = document.querySelectorAll('#opciones button');
+opcionesElems.forEach((opcionBtn) => {
+  opcionBtn.addEventListener('click', (event) => {
+    event.preventDefault(); // Agrega esta línea para evitar la recarga de la página
+    const respuesta = opcionBtn.textContent;
     socket.emit('respuesta', respuesta);
   });
 });

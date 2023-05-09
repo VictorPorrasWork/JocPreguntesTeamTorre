@@ -111,7 +111,7 @@
     },
     {
         "id": 11,
-        "pregunta": "¿Qué tipo de Pokémon es Charmander?",
+        "pregunta": "Cuál tipo de Pokemon es Charmander?",
         "opcions": [
         "Agua",
         "Fuego",
