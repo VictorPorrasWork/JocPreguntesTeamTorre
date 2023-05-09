@@ -124,15 +124,26 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   }
 });
 
-socket.on('puntuacion-actualizada', (score) => {
+socket.on('puntuacion-actualizada', (name, score) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
-  puntosPlayer.textContent = player.score;
+  puntosPlayer.textContent = score;
 });
 
 // Mostrar el resultado final del juego
-socket.on('resultadoFinal', (puntuacion) => {
+// Mostrar el resultado final del juego
+socket.on('resultadoFinal', (players) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
+  resultadoFinalElem.innerHTML = '';
+
+  players.forEach(player => {
+    const playerElem = document.createElement('div');
+    playerElem.innerHTML = `${player.name}: ${player.score}`;
+    resultadoFinalElem.appendChild(playerElem);
+  });
+
+  const podio = document.querySelector('#podio');
+  podio.style.display = 'block';
+
   socket.emit('game-ended');
 });
 
@@ -146,7 +157,7 @@ socket.on('admin-status', (status) => {
   isAdmin = status;
 });
 
-socket.on('game-ended', () => {
-  console.log('La partida ha terminado');
-  window.location.href = '/podio.html';
-});
+// socket.on('game-ended', () => {
+//   console.log('La partida ha terminado');
+//   window.location.href = '/podio.html';
+// });

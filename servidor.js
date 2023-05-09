@@ -39,17 +39,13 @@ io.on('connection', (socket) => {
     console.log('La partida ha empezado');
     io.emit('saludo');
     index =0;
-  });
-
-  socket.on('solicitopregunta', () => {
     const pregunta = preguntas[index].pregunta;
     const opciones = preguntas[index].opcions;
     const opcionBona = preguntas[index].opcioBona;
-    
     io.emit('pregunta', pregunta, opciones);
-  
+
     intervalId = setInterval(() => {
-      if (index < preguntas.length - 1) {
+      if (index < preguntas.length) {
         index++;
         const pregunta = preguntas[index].pregunta;
         const opciones = preguntas[index].opcions;
@@ -59,7 +55,18 @@ io.on('connection', (socket) => {
         io.emit('resultadoFinal', players.map(player => ({ name: player.name, score: player.score })));
         clearInterval(intervalId);
       }
-    }, 20000);
+      
+    }, 15000);
+  });
+
+  socket.on('solicitopregunta', () => {
+    // const pregunta = preguntas[index].pregunta;
+    // const opciones = preguntas[index].opcions;
+    // const opcionBona = preguntas[index].opcioBona;
+    
+    // io.emit('pregunta', pregunta, opciones);
+  
+    
   });
   
   
@@ -74,9 +81,23 @@ io.on('connection', (socket) => {
       console.log(`${jugador.name} ha respondido incorrectamente. Puntuación: ${jugador.score}`);
     }
     
-    clearInterval(intervalId);
+    // clearInterval(intervalId);
   });
+
+  // socket.on('resultadoFinal', () => {
+  //   // Ordena los jugadores por su puntuación en orden descendente
+  //   const podium = players.sort((a, b) => b.score - a.score);
+  //   // Muestra el podio en la consola del servidor
+  //   console.log('--- PODIUM ---');
+  //   for (let i = 0; i < podium.length; i++) {
+  //     console.log(`${i + 1}. ${podium[i].name} - ${podium[i].score} puntos`);
+  //   }
+  //   // Emite el podio a todos los clientes
+  //   io.emit('podio', podium);
+  // });
 });
+
+
 
 
 httpServer.listen(3000, () => {
