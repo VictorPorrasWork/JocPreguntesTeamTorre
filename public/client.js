@@ -119,13 +119,19 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
 
 socket.on('puntuacion-actualizada', (score) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
-  puntosPlayer.textContent = player.score;
+  puntosPlayer.textContent = score;
 });
 
 // Mostrar el resultado final del juego
-socket.on('resultadoFinal', (puntuacion) => {
+socket.on('resultadoFinal', (name, score) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
+  resultadoFinalElem.value = score;
+  const jugador = document.querySelector('#jugador');
+  jugador.innerHTML = name;
+  console.log('Tu puntuación '+ name +'es: ' + score);
+  const podio = document.querySelector('#podio');
+  podio.style.display = 'block';
+  socket.emit('game-ended');
 });
 
 // Mostrar el mensaje de error
