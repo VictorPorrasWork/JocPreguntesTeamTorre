@@ -23,10 +23,10 @@
           <label>Pregunta:</label>
           <input type="text" id="pregunta" readonly>
           <div id="opciones">
-            <input type="text" id="opcion-a" readonly>
-            <input type="text" id="opcion-b" readonly>
-            <input type="text" id="opcion-c" readonly>
-            <input type="text" id="opcion-d" readonly>
+            <input type="text" id="opcion1" readonly>
+            <input type="text" id="opcion2" readonly>
+            <input type="text" id="opcion3" readonly>
+            <input type="text" id="opcion4" readonly>
           </div>
           <div id="respuestas">
             <button id="respuesta-a">A</button>
@@ -37,17 +37,17 @@
           <div id="mensaje"></div>
         </form>
     </div>
-    <div id="tablausuarios" class="tabla-usuarios">
+    <div id="tablausuarios">
       <h2>Tabla de usuarios</h2>
-      <table>
+      <table id="user-list">
         <thead>
           <tr>
             <th>Nombre de usuario</th>
             <th>Puntuación</th>
           </tr>
         </thead>
-        <tbody id="user-list">
-        </tbody>
+        <tbody id="user-list"></tbody>
+        <tbody id="puntosPlayer"></tbody>
       </table>
     </div>
     <script src="/socket.io/socket.io.js"></script>
