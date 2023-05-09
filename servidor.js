@@ -8,11 +8,6 @@ const path = require('path');
 // Ruta para servir archivos estáticos
 app.use(express.static(__dirname + '/public'));
 
-// Ruta principal para servir el archivo login.html
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/login.html');
-});
-
 // Ruta para servir el archivo juego.html
 app.get('/juego.html', (req, res) => {
   res.sendFile(__dirname + '/public/juego.html');
