@@ -117,9 +117,9 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   }
 });
 
-socket.on('puntuacion-actualizada', (puntuacion) => {
+socket.on('puntuacion-actualizada', (score) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
-  puntosPlayer.textContent = puntuacion;
+  puntosPlayer.textContent = player.score;
 });
 
 // Mostrar el resultado final del juego

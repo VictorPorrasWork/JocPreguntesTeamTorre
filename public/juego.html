@@ -14,10 +14,10 @@
       </form>
       <p id="game-message"></p>
       <ul id="player-list"></ul>
-  
+
       <!-- Botón de inicio de partida -->
       <button id="start-button" style="display:none;">Iniciar partida</button>
-    </div>  
+    </div>
     <div id="partida" class="hidden">
         <form>
           <label>Pregunta:</label>
@@ -40,15 +40,22 @@
           <tr>
             <th>Nombre de usuario</th>
             <th>Puntuación</th>
+            <th>Tiempo</th>
           </tr>
         </thead>
         <tbody> 
           <tr>
             <td id="user-list"></td>
             <td id="puntosPlayer"></td>
+            <td id="tiempo"></td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div id="podio">
+      <!--Aqui ira la pantalla del podio -->
+
+
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
