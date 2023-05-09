@@ -1,5 +1,10 @@
 // Crea una instancia del cliente Socket.IO y se une a la sala
 const socket = io('http://localhost:3000');
+
+// Ocultar el formulario de podio al inicio
+const podioForm = document.querySelector('#podio');
+podioForm.style.display = 'none';
+
 socket.on('connect', () => {
   console.log('Conectado al servidor');
 });
@@ -7,8 +12,8 @@ socket.on('connect', () => {
 let playerName;
 let isAdmin = false;
 
-
 document.querySelector('#login').addEventListener('submit', (event) => {
+
   event.preventDefault();
   const playerInput = document.querySelector('#player');
   playerName = playerInput.value.trim();
@@ -79,12 +84,14 @@ socket.on('player-list', (players) => {
 socket.on('saludo', () => {
   console.log("muestro el menú y ahora correra el tiempo ")
 
-  // Mostrar el formulario de juego y ocultar el de inicio de sesión
+  // Mostrar el formulario de juego y ocultar el de inicio de sesión 
   const loginForm = document.querySelector('#login');
   loginForm.style.display = 'none';
   const partidaForm = document.querySelector('#partida');
   partidaForm.style.display = 'block';
   socket.emit('solicitopregunta');
+
+
 });
 
 // Recibimos la pregunta del servidor y la mostramos en el formulario
@@ -117,20 +124,26 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   }
 });
 
-socket.on('puntuacion-actualizada', (score) => {
+socket.on('puntuacion-actualizada', (name, score) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
   puntosPlayer.textContent = score;
 });
 
 // Mostrar el resultado final del juego
-socket.on('resultadoFinal', (name, score) => {
+// Mostrar el resultado final del juego
+socket.on('resultadoFinal', (players) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.value = score;
-  const jugador = document.querySelector('#jugador');
-  jugador.innerHTML = name;
-  console.log('Tu puntuación '+ name +'es: ' + score);
+  resultadoFinalElem.innerHTML = '';
+
+  players.forEach(player => {
+    const playerElem = document.createElement('div');
+    playerElem.innerHTML = `${player.name}: ${player.score}`;
+    resultadoFinalElem.appendChild(playerElem);
+  });
+
   const podio = document.querySelector('#podio');
   podio.style.display = 'block';
+
   socket.emit('game-ended');
 });
 
@@ -144,7 +157,7 @@ socket.on('admin-status', (status) => {
   isAdmin = status;
 });
 
-socket.on('game-ended', () => {
-  console.log('La partida ha terminado');
-  window.location.href = '/podio.html';
-});
+// socket.on('game-ended', () => {
+//   console.log('La partida ha terminado');
+//   window.location.href = '/podio.html';
+// });

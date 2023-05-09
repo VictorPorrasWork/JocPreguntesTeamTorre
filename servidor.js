@@ -39,17 +39,13 @@ io.on('connection', (socket) => {
     console.log('La partida ha empezado');
     io.emit('saludo');
     index =0;
-  });
+    const pregunta = preguntas[index].pregunta;
+    const opciones = preguntas[index].opcions;
+    const opcionBona = preguntas[index].opcioBona;
+    io.emit('pregunta', pregunta, opciones);
 
-  socket.on('solicitopregunta', () => {
-    // const pregunta = preguntas[index].pregunta;
-    // const opciones = preguntas[index].opcions;
-    // const opcionBona = preguntas[index].opcioBona;
-    
-    // io.emit('pregunta', pregunta, opciones);
-  
     intervalId = setInterval(() => {
-      if (index < preguntas.length - 1) {
+      if (index < preguntas.length) {
         index++;
         const pregunta = preguntas[index].pregunta;
         const opciones = preguntas[index].opcions;
@@ -59,7 +55,18 @@ io.on('connection', (socket) => {
         io.emit('resultadoFinal', players.map(player => ({ name: player.name, score: player.score })));
         clearInterval(intervalId);
       }
-    }, 3000);
+      
+    }, 15000);
+  });
+
+  socket.on('solicitopregunta', () => {
+    // const pregunta = preguntas[index].pregunta;
+    // const opciones = preguntas[index].opcions;
+    // const opcionBona = preguntas[index].opcioBona;
+    
+    // io.emit('pregunta', pregunta, opciones);
+  
+    
   });
   
   
@@ -74,7 +81,7 @@ io.on('connection', (socket) => {
       console.log(`${jugador.name} ha respondido incorrectamente. Puntuación: ${jugador.score}`);
     }
     
-    clearInterval(intervalId);
+    // clearInterval(intervalId);
   });
 
   // socket.on('resultadoFinal', () => {
