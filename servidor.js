@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
 
 // Lista de jugadores en la sala
 let players = [];
+let index = 0;
+let puntuacion = 0;
 
 // Escucha las conexiones de los clientes
 io.on('connection', (socket) => {
@@ -53,11 +55,12 @@ io.on('connection', (socket) => {
       socket.on('game-started', () => {
         console.log('La partida ha empezado');
         io.emit('saludo');
+        index =0;
       });
 
       socket.on('solicitopregunta', () => {
-        let index = 0;
-        let puntuacion = 0;
+        
+
       
         //hemos quitado el setInterval que el jugador vaya respondiendo
         //const intervalId = setInterval(() => {
@@ -68,35 +71,42 @@ io.on('connection', (socket) => {
           //llega pregunta opciones opcionBona
           //poner for
           io.emit('pregunta', pregunta, opciones);
-          index++;
+         // index++;
           if (index < preguntas.length) {
-            console.log(preguntas.length);
-            console.log(opciones);
+            // console.log(preguntas.length);
+            // console.log(opciones);
            // clearInterval(intervalId);
-            io.emit('resultadoFinal', puntuacion);
+            // io.emit('resultadoFinal', puntuacion);
           }
         //}, 5000);
-      
+      });
 
         socket.on('respuesta', (respuestaUsuario) => {
-          const preguntaActual = preguntas[index - 1];
+          const preguntaActual = preguntas[index];
+          const opcionBona = preguntas[index].opcioBona;
+          console.log(respuestaUsuario)
+          console.log(opcionBona)
           if (preguntaActual.opcioBona === respuestaUsuario) {
             puntuacion++;
             console.log('Respuesta correcta. Puntuación:', puntuacion);
           } else {
             console.log('Respuesta incorrecta. Puntuación:', puntuacion);
           }
+          
           if (index < preguntas.length) {
             index++;
             const pregunta = preguntas[index].pregunta;
             const opciones = preguntas[index].opcions;
+            const opcionBona = preguntas[index].opcioBona;
+            console.log(opcionBona)
+            console.log(opciones)
             io.emit('pregunta', pregunta, opciones);
           } else {
             io.emit('resultadoFinal', puntuacion);
           }
         });
         
-      });
+      
      
    });
 

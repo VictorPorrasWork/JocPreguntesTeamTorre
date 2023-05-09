@@ -59,7 +59,7 @@ socket.on('player-list', (players) => {
   });
 
   // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" si hay suficientes jugadores en la sala
-  if (isAdmin && players.length >= 2) {
+  if (isAdmin && players.length >= 1) {
     const startButton = document.querySelector('#start-button');
     startButton.style.display = 'block';
     
