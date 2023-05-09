@@ -53,6 +53,8 @@ io.on('connection', (socket) => {
         } else {
           io.emit('resultadoFinal', puntuacion);
         }
+      // 60 segundos * 1000 milisegundos = 60000
+      // 5 segundios  
     }, 5000);
   
     const pregunta = preguntas[index].pregunta;
