@@ -85,15 +85,16 @@ socket.on('saludo', () => {
 
 // Recibimos la pregunta del servidor y la mostramos en el formulario
 socket.on('pregunta', (pregunta, opciones) => {
-  //no llega, no se printan las preguntas ni las respuestas
+  console.log(opciones);
   const preguntaElem = document.querySelector('#pregunta');
-  preguntaElem.textContent = pregunta;
-  const opcionesElems = document.querySelectorAll('[id^="opcion"]');
-  opcionesElems.forEach((opcionElem, index) => {
-    opcionElem.value = opciones[index];
-  });
+  preguntaElem.value = pregunta;
+  const opcionesElems = document.querySelectorAll('#opciones input[type="text"]');
+  for (let i = 0; i < opcionesElems.length; i++) {
+    opcionesElems[i].value = opciones[i];
+  }
 });
 
+/*
 // Manejar la respuesta del usuario
 const opcionesElems = document.querySelectorAll('[id^="opcion"]');
 opcionesElems.forEach((opcionElem) => {
@@ -119,7 +120,7 @@ socket.on('resultadoFinal', (puntuacion) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
   resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
 });
-
+*/
 // Mostrar el mensaje de error
 socket.on('error', (mensaje) => {
   alert(mensaje);

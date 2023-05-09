@@ -58,21 +58,23 @@ io.on('connection', (socket) => {
       socket.on('solicitopregunta', () => {
         let index = 0;
         let puntuacion = 0;
-        const intervalId = setInterval(() => {
+        //hemos quitado el setInterval que el jugador vaya respondiendo
+        //const intervalId = setInterval(() => {
           const pregunta = preguntas[index].pregunta;
           const opciones = preguntas[index].opcions;
           const opcionBona = preguntas[index].opcioBona;
-          //llega
-          //console.log(preguntas[index].pregunta);
-          //console.log(preguntas[index].opcions);
-          //console.log(preguntas[index].opcioBona);
+         
+          //llega pregunta opciones opcionBona
+          //poner for
           io.emit('pregunta', pregunta, ...opciones);
           index++;
-          if (index === preguntas.length) {
-            clearInterval(intervalId);
+          if (index <= preguntas.length) {
+            console.log(preguntas.length);
+            console.log(opciones);
+           // clearInterval(intervalId);
             io.emit('resultadoFinal', puntuacion);
           }
-        }, 10000);
+        //}, 5000);
       
         socket.on('respuesta', (respuestaUsuario) => {
           const preguntaActual = preguntas[index - 1];
@@ -84,8 +86,6 @@ io.on('connection', (socket) => {
           }
         });
       });
-      
-      
      
    });
 
