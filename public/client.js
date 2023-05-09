@@ -124,9 +124,9 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   }
 });
 
-socket.on('puntuacion-actualizada', (score) => {
+socket.on('puntuacion-actualizada', (name, score) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
-  puntosPlayer.textContent = player.score;
+  puntosPlayer.innerHTML = score;
 });
 
 // Mostrar el resultado final del juego
