@@ -16,10 +16,8 @@ document.querySelector('#login').addEventListener('submit', (event) => {
  
   
   // Muestra el nombre de usuario en la tabla de usuarios
-  const tablaUsuarios = document.querySelector('#tablausuarios tbody');
-  const row = tablaUsuarios.insertRow();
-  const cell = row.insertCell();
-  cell.textContent = playerName;
+  const tablaUsuarios = document.querySelector('#user-list');
+  tablaUsuarios.textContent = playerName;
   
 });
 
@@ -112,6 +110,11 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   } else {
     resultadoElem.value = 'Incorrecto. La respuesta correcta es: ' + respuestaCorrecta;
   }
+});
+
+socket.on('puntuacion-actualizada', (puntuacion) => {
+  const puntosPlayer = document.querySelector('#puntosPlayer');
+  puntosPlayer.textContent = puntuacion;
 });
 
 // Mostrar el resultado final del juego

@@ -89,6 +89,7 @@ io.on('connection', (socket) => {
           if (preguntaActual.opcioBona === respuestaUsuario) {
             puntuacion++;
             console.log('Respuesta correcta. Puntuación:', puntuacion);
+            io.emit('puntuacion-actualizada', puntuacion);
           } else {
             console.log('Respuesta incorrecta. Puntuación:', puntuacion);
           }
