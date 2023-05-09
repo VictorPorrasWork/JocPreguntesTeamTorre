@@ -23,6 +23,12 @@ document.querySelector('#login').addEventListener('submit', (event) => {
   
 });
 
+const countdownEl = document.getElementById('countdown');
+socket.on('countdown', (countdown) => {
+  countdownEl.textContent = countdown;
+});
+
+
   // Escucha el evento de confirmación de unirse a la sala
   socket.on('room-joined', (name) => {
   console.log(`Te has unido a la sala, ${name}!`);
@@ -94,11 +100,10 @@ socket.on('pregunta', (pregunta, opciones) => {
   }
 });
 
-// Agrega este bloque de código
 const opcionesElems = document.querySelectorAll('#opciones button');
 opcionesElems.forEach((opcionBtn) => {
   opcionBtn.addEventListener('click', (event) => {
-    event.preventDefault(); // Agrega esta línea para evitar la recarga de la página
+    event.preventDefault(); // Evitar recarga de la página
     const respuesta = opcionBtn.textContent;
     socket.emit('respuesta', respuesta);
   });
