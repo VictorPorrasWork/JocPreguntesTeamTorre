@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
 
   socket.on('solicitopregunta', () => {
     intervalId = setInterval(() => {
-        if (index < preguntas.length) {
+        if (index < preguntas.length -1) {
           index++;
           const pregunta = preguntas[index].pregunta;
           const opciones = preguntas[index].opcions;
@@ -52,20 +52,22 @@ io.on('connection', (socket) => {
           io.emit('pregunta', pregunta, opciones);
         } else {
           io.emit('resultadoFinal', puntuacion);
+        clearInterval(intervalId);
         }
       // 60 segundos * 1000 milisegundos = 60000
       // 5 segundios  
     }, 5000);
-  
+    if (index < preguntas.length) {
     const pregunta = preguntas[index].pregunta;
     const opciones = preguntas[index].opcions;
     const opcionBona = preguntas[index].opcioBona;
   
     io.emit('pregunta', pregunta, opciones);
+  }
+  
   });
   
   socket.on('respuesta', (respuestaUsuario) => {
-    clearInterval(intervalId);
     const preguntaActual = preguntas[index];
     if (preguntaActual.opcioBona === respuestaUsuario) {
       puntuacion++;
@@ -75,7 +77,7 @@ io.on('connection', (socket) => {
       console.log('Respuesta incorrecta. Puntuación:', puntuacion);
     }
     
-    if (index < preguntas.length) {
+    if (index < preguntas.length - 1) { // el -1 es para que no intente acceder a un elemento fuera del array
       index++;
       const pregunta = preguntas[index].pregunta;
       const opciones = preguntas[index].opcions;
