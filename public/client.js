@@ -12,8 +12,8 @@ socket.on('connect', () => {
 let playerName;
 let isAdmin = false;
 
-document.querySelector('#login').addEventListener('submit', (event) => {
 
+document.querySelector('#login').addEventListener('submit', (event) => {
   event.preventDefault();
   const playerInput = document.querySelector('#player');
   playerName = playerInput.value.trim();
@@ -84,14 +84,12 @@ socket.on('player-list', (players) => {
 socket.on('saludo', () => {
   console.log("muestro el menú y ahora correra el tiempo ")
 
-  // Mostrar el formulario de juego y ocultar el de inicio de sesión 
+  // Mostrar el formulario de juego y ocultar el de inicio de sesión
   const loginForm = document.querySelector('#login');
   loginForm.style.display = 'none';
   const partidaForm = document.querySelector('#partida');
   partidaForm.style.display = 'block';
   socket.emit('solicitopregunta');
-
-
 });
 
 // Recibimos la pregunta del servidor y la mostramos en el formulario
@@ -124,27 +122,15 @@ socket.on('resultado', (resultado, respuestaCorrecta) => {
   }
 });
 
-socket.on('puntuacion-actualizada', (name, score) => {
+socket.on('puntuacion-actualizada', (puntuacion) => {
   const puntosPlayer = document.querySelector('#puntosPlayer');
-  puntosPlayer.textContent = score;
+  puntosPlayer.textContent = puntuacion;
 });
 
 // Mostrar el resultado final del juego
-// Mostrar el resultado final del juego
-socket.on('resultadoFinal', (players) => {
+socket.on('resultadoFinal', (puntuacion) => {
   const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.innerHTML = '';
-
-  players.forEach(player => {
-    const playerElem = document.createElement('div');
-    playerElem.innerHTML = `${player.name}: ${player.score}`;
-    resultadoFinalElem.appendChild(playerElem);
-  });
-
-  const podio = document.querySelector('#podio');
-  podio.style.display = 'block';
-
-  socket.emit('game-ended');
+  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
 });
 
 // Mostrar el mensaje de error
@@ -157,7 +143,7 @@ socket.on('admin-status', (status) => {
   isAdmin = status;
 });
 
-// socket.on('game-ended', () => {
-//   console.log('La partida ha terminado');
-//   window.location.href = '/podio.html';
-// });
+socket.on('game-ended', () => {
+  console.log('La partida ha terminado');
+  window.location.href = '/podio.html';
+});

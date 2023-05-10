@@ -1,5 +1,10 @@
 // Crea una instancia del cliente Socket.IO y se une a la sala
 const socket = io('http://localhost:3000');
+
+// Ocultar el formulario de podio al inicio
+const podioForm = document.querySelector('#podio');
+podioForm.style.display = 'none';
+
 socket.on('connect', () => {
   console.log('Conectado al servidor');
 });
@@ -16,12 +21,16 @@ document.querySelector('#login').addEventListener('submit', (event) => {
  
   
   // Muestra el nombre de usuario en la tabla de usuarios
-  const tablaUsuarios = document.querySelector('#tablausuarios tbody');
-  const row = tablaUsuarios.insertRow();
-  const cell = row.insertCell();
-  cell.textContent = playerName;
+  const tablaUsuarios = document.querySelector('#user-list');
+  tablaUsuarios.textContent = playerName;
   
 });
+
+const countdownEl = document.getElementById('countdown');
+socket.on('countdown', (countdown) => {
+  countdownEl.textContent = countdown;
+});
+
 
   // Escucha el evento de confirmación de unirse a la sala
   socket.on('room-joined', (name) => {
@@ -59,7 +68,7 @@ socket.on('player-list', (players) => {
   });
 
   // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" si hay suficientes jugadores en la sala
-  if (isAdmin && players.length >= 2) {
+  if (isAdmin && players.length >= 1) {
     const startButton = document.querySelector('#start-button');
     startButton.style.display = 'block';
     
@@ -83,18 +92,51 @@ socket.on('saludo', () => {
   socket.emit('solicitopregunta');
 });
 
-// Escucha el evento de inicio de partida io.emit('pregunta', pregunta, opciones);
+// Recibimos la pregunta del servidor y la mostramos en el formulario
 socket.on('pregunta', (pregunta, opciones) => {
-
-// Mostrar la primera pregunta y opciones en el formulario de juego
-    document.getElementById('pregunta').value = pregunta;
-    document.getElementById('opcion1').value = opciones[0];
-    document.getElementById('opcion2').value = opciones[1];
-    document.getElementById('opcion3').value = opciones[2];
-    document.getElementById('opcion4').value = opciones[3];
+  console.log(opciones);
+  const preguntaElem = document.querySelector('#pregunta');
+  preguntaElem.value = pregunta;
+  const opcionesElems = document.querySelectorAll('#opciones button');
+  for (let i = 0; i < opcionesElems.length; i++) {
+    opcionesElems[i].textContent = opciones[i];
+  }
 });
 
+const opcionesElems = document.querySelectorAll('#opciones button');
+opcionesElems.forEach((opcionBtn) => {
+  opcionBtn.addEventListener('click', (event) => {
+    event.preventDefault(); // Evitar recarga de la página
+    const respuesta = opcionBtn.textContent;
+    socket.emit('respuesta', respuesta);
+  });
+});
 
+// Mostrar el resultado de la pregunta
+socket.on('resultado', (resultado, respuestaCorrecta) => {
+  const resultadoElem = document.querySelector('#resultado');
+  if (resultado) {
+    resultadoElem.value = '¡Correcto!';
+  } else {
+    resultadoElem.value = 'Incorrecto. La respuesta correcta es: ' + respuestaCorrecta;
+  }
+});
+
+socket.on('puntuacion-actualizada', (puntuacion) => {
+  const puntosPlayer = document.querySelector('#puntosPlayer');
+  puntosPlayer.textContent = puntuacion;
+});
+
+// Mostrar el resultado final del juego
+socket.on('resultadoFinal', (puntuacion) => {
+  const resultadoFinalElem = document.querySelector('#resultado-final');
+  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
+});
+
+// Mostrar el mensaje de error
+socket.on('error', (mensaje) => {
+  alert(mensaje);
+});
 
 // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" y envía un evento al servidor cuando se hace clic
 socket.on('admin-status', (status) => {
