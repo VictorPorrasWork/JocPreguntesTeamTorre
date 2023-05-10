@@ -1,10 +1,7 @@
 // Crea una instancia del cliente Socket.IO y se une a la sala
 const socket = io('http://localhost:3000');
 
-// Ocultar el formulario de podio al inicio
-const podioForm = document.querySelector('#podio');
-podioForm.style.display = 'none';
-
+//Conexion al servidor
 socket.on('connect', () => {
   console.log('Conectado al servidor');
 });
@@ -12,6 +9,9 @@ socket.on('connect', () => {
 let playerName;
 let isAdmin = false;
 
+// Ocultar lista de usuarios al inicio
+const listaUsuarios = document.querySelector('#tablausuarios');
+listaUsuarios.style.display = 'none';
 
 document.querySelector('#login').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -68,7 +68,7 @@ socket.on('player-list', (players) => {
   });
 
   // Si el jugador actual es el administrador, muestra el botón "Iniciar partida" si hay suficientes jugadores en la sala
-  if (isAdmin && players.length >= 1) {
+  if (isAdmin && players.length >= 2) {
     const startButton = document.querySelector('#start-button');
     startButton.style.display = 'block';
     
@@ -84,12 +84,19 @@ socket.on('player-list', (players) => {
 socket.on('saludo', () => {
   console.log("muestro el menú y ahora correra el tiempo ")
 
+  // Ocultar el podio al inicio
+  const podioForm = document.querySelector('#podio');
+  podioForm.style.display = 'none';
+
   // Mostrar el formulario de juego y ocultar el de inicio de sesión
   const loginForm = document.querySelector('#login');
   loginForm.style.display = 'none';
   const partidaForm = document.querySelector('#partida');
   partidaForm.style.display = 'block';
+  const UsuariosForm = document.querySelector('#tablausuarios');
+  UsuariosForm.style.display = 'block';
   socket.emit('solicitopregunta');
+
 });
 
 // Recibimos la pregunta del servidor y la mostramos en el formulario
@@ -127,10 +134,13 @@ socket.on('puntuacion-actualizada', (puntuacion) => {
   puntosPlayer.textContent = puntuacion;
 });
 
+socket.on('tiempo-restante', (tiempoRestante) => {
+  document.getElementById('tiempo').textContent = tiempoRestante;
+});
+
 // Mostrar el resultado final del juego
 socket.on('resultadoFinal', (puntuacion) => {
-  const resultadoFinalElem = document.querySelector('#resultado-final');
-  resultadoFinalElem.value = 'Tu puntuación final es: ' + puntuacion;
+  document.getElementById('resultado-final').textContent = puntuacion;
 });
 
 // Mostrar el mensaje de error
@@ -145,5 +155,28 @@ socket.on('admin-status', (status) => {
 
 socket.on('game-ended', () => {
   console.log('La partida ha terminado');
-  window.location.href = '/podio.html';
+
+  // Ocultar el formulario de juego y mostrar el de podio al terminar el juego
+  const partidaForm = document.querySelector('#partida');
+  partidaForm.style.display = 'none';
+ 
+  const podioForm = document.querySelector('#podio');
+  podioForm.style.display = 'block';
+
+// Obtener los elementos de la lista de jugadores y concatenar sus nombres separados por comas
+const playersList = document.querySelectorAll('#player-list li');
+const playerNames = Array.from(playersList).map(player => player.textContent).join('<br>');
+
+// Actualizar el contenido del elemento #player-list-update con los nombres de los jugadores
+const playerListUpdateElem = document.querySelector('#player-list-update');
+playerListUpdateElem.innerHTML = playerNames;
+
+//Reiniciar partida
+const reiniciarPartidaBtn = document.querySelector('#reiniciar');
+
+    reiniciarPartidaBtn.addEventListener('click', () => {
+      socket.emit('game-started');
+    });
+
+
 });

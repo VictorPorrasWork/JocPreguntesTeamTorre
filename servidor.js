@@ -42,7 +42,10 @@ io.on('connection', (socket) => {
     index =0;
   });
 
+  let tiempoRestanteId;
+
   socket.on('solicitopregunta', () => {
+    let tiempoRestante = 30;
     intervalId = setInterval(() => {
         if (index < preguntas.length -1) {
           index++;
@@ -50,13 +53,29 @@ io.on('connection', (socket) => {
           const opciones = preguntas[index].opcions;
           const opcionBona = preguntas[index].opcioBona;
           io.emit('pregunta', pregunta, opciones);
+          tiempoRestante = 30; // Reiniciar tiempo restante cada vez que se muestra una pregunta nueva
+       
+          // Cancelar intervalo anterior y crear uno nuevo para el tiempo restante
+          clearInterval(tiempoRestanteId);
+          tiempoRestanteId = setInterval(() => {
+            tiempoRestante--;
+            if (tiempoRestante <= 0) {
+              clearInterval(tiempoRestanteId);
+            } else {
+              io.emit('tiempo-restante', tiempoRestante);
+            }
+          }, 1000);      
         } else {
-          io.emit('resultadoFinal', puntuacion);
+          // Se han completado todas las preguntas
+          //io.emit('resultadoFinal', puntuacion);
+          io.emit('game-ended'); 
         clearInterval(intervalId);
+        clearInterval(tiempoRestanteId); // Cancelar intervalo de tiempo restante al final del juego
         }
-      // 60 segundos * 1000 milisegundos = 60000
-      // 5 segundios  
-    }, 5000);
+        // 60 segundos * 1000 milisegundos = 60000
+      // 30 segundos  * milisegundos 1000 = 5000
+    }, 30000);
+
     if (index < preguntas.length) {
     const pregunta = preguntas[index].pregunta;
     const opciones = preguntas[index].opcions;
@@ -83,6 +102,18 @@ io.on('connection', (socket) => {
       const opciones = preguntas[index].opcions;
       const opcionBona = preguntas[index].opcioBona;
       io.emit('pregunta', pregunta, opciones);
+
+      // Cancelar intervalo anterior y crear uno nuevo para el tiempo restante
+      clearInterval(tiempoRestanteId);
+      let tiempoRestante = 30;
+      tiempoRestanteId = setInterval(() => {
+        tiempoRestante--;
+        if (tiempoRestante <= 0) {
+          clearInterval(tiempoRestanteId);
+        } else {
+          io.emit('tiempo-restante', tiempoRestante);
+        }
+      }, 1000);      
     } else {
       io.emit('resultadoFinal', puntuacion);
     }

@@ -33,7 +33,7 @@
         <span id="countdown"></span>
 
     </div>
-    <div id="tablausuarios">
+    <div id="tablausuarios" class="hidden">
       <h2>Tabla de usuarios</h2>
       <table>
         <thead>
@@ -46,13 +46,13 @@
         <tbody> 
           <tr>
             <td id="user-list"></td>
-            <td id="puntosPlayer"></td>
-            <td id="tiempo"></td>
+            <td id="puntosPlayer" align="right"></td>
+            <td id="tiempo" align="right"></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div id="podio">
+    <div id="podio" class="hidden">
       <h2>Podio Ganador</h2>
       <table>
         <thead>
@@ -65,11 +65,12 @@
         <tbody>
           <tr>
             <td id="clasificacion"></td>
-            <td id="jugador"></td>
-            <td id="resultado-final"></td>
+            <td id="player-list-update"></td>
+            <td id="resultado-final" align="right"></td>
           </tr>
         </tbody>
       </table>
+      <button id="reiniciar">Reiniciar partida</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./client.js"></script>
